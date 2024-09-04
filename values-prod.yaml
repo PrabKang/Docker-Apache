@@ -1,0 +1,3 @@
+appPort: 222              # The port on which the application will run.
+appText: PROD app text    # A text or message specific to the production environment.
+namespace: prod           # The Kubernetes namespace where the application will be deployed.

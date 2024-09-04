@@ -1,0 +1,33 @@
+apiVersion: apps/v1  # Specifies the API version for the Deployment resource.
+kind: Deployment  # Declares that this resource is a Deployment, which manages a set of replicated Pods.
+metadata:
+  name: {{ .Values.appName }}  # The name of the Deployment, set using Helm templating. It will be replaced with the value of 'appName' from the Helm chart's 'values.yaml' file.
+  namespace: {{ .Values.namespace }}  # The Kubernetes namespace where the Deployment will be created.
+spec:
+  replicas: 1  # The number of Pods.
+  selector:
+    matchLabels:
+      app: {{ .Values.appName }}  # Labels used to identify Pods that belong to this Deployment.
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.appName }}  # Labels applied to the Pods created by this Deployment.
+    spec:
+      containers:
+        - name: {{ .Values.appName }}  # The name of the container.
+          image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"  # The container image to use.
+            - name: http  # A name for the port, useful when there are multiple ports. 
+              containerPort: {{ .Values.appPort }}  # The port on which the container listens. 
+          env:  # Environment variables for the container.
+            - name: PORTXXX  # The name of the environment variable. 
+              valueFrom:
+                configMapKeyRef:
+                  name: prab-config  # The name of the ConfigMap.
+                  key: PORTXXX  # The key within the ConfigMap.
+            - name: TEXTXXX  # Another environment variable.
+              valueFrom:
+                configMapKeyRef:
+                  name: prab-config  # The name of the ConfigMap.
+                  key: TEXTXXX  # The key within the ConfigMap.
+      imagePullSecrets:
+        - name: docker-registry-credentials  # Specifies the name of the Secret used to authenticate with the Docker registry to pull the image.

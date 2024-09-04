@@ -1,0 +1,14 @@
+apiVersion: v1          # Specifies the API version for the Kubernetes Service resource. 'v1' is the stable version. 
+kind: Service           # Declares that this resource is a Kubernetes Service, which is used to expose an application running on a set of Pods.
+metadata:
+  name: {{ .Values.appName }}  # The name of the Service.
+  namespace: {{ .Values.namespace }}  # The namespace in which the Service will be deployed.
+spec:
+  ports:
+    - name: http        # Defines a named port ('http') for the Service, which can be useful for identifying the port in multi-port Services.
+      port: 80          # The port that the Service will expose.
+      protocol: TCP     # Specifies the protocol used by the Service. In this case, TCP is used, which is the standard for HTTP traffic.
+      targetPort: {{ .Values.appPort }} # The port on the container where the Service should forward traffic.
+  selector:
+    app: {{ .Values.appName }}  # The selector is used to match Pods with a label 'app' set to the value of 'appName' from 'values.yaml'.
+  type: ClusterIP        # Specifies the type of the Service. 'ClusterIP' means that the Service is only accessible within the cluster, providing an internal IP address to access the application.

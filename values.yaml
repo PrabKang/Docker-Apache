@@ -1,0 +1,8 @@
+appName: prab               # The name of the application.
+appPort: 222                # The port on which the application will run.
+appText: Default app text   # A default text or message that may be displayed or used by the application
+namespace: default          # The Kubernetes namespace where the application will be deployed.
+
+image:                      # Specifies the container image details used to deploy the application.
+  name: harbor.byhiras.co.uk/core_dev/prab  # TO BE CHANGED: The full path to the container image repository and image name.
+  tag: v1.0.2               # The specific version (tag) of the container image to be used.

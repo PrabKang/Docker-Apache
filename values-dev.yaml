@@ -1,0 +1,5 @@
+appPort: 222
+appText: DEV app text
+namespace: dev
+image:
+  tag: v1.0.4
